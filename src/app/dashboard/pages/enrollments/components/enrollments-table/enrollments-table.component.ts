@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Enrollment } from '../../models';
-import { selectEnrollments, selectEnrollmentsIsLoading} from '../../store/enrollment.selectors';
+import { selectEnrollments, selectEnrollmentsIsLoading,} from '../../store/enrollment.selectors';
 
 @Component({
   selector: 'app-enrollments-table',
@@ -20,3 +20,4 @@ export class EnrollmentsTableComponent {
     this.isLoading$ = this.store.select(selectEnrollmentsIsLoading);
   }
 }
+

@@ -5,8 +5,6 @@
   Crear usuario
 </button>
 
-<!-- {{ testUser | fullname : "lowercase" }} -->
-
 <app-users-table
   [dataSource]="(users$ | async) || []"
   (editUser)="onEditUser($event)"

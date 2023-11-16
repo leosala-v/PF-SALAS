@@ -9,8 +9,8 @@ export class UsersBetterService {
     const users = this.usersService.getUsers();
     const products = [
       {
-        id: 1,
-        name: 'TV 24"',
+        id: 2,
+        name: 'fgshdjv"',
       },
     ];
     return {

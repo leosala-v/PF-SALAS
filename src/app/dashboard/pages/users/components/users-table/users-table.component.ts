@@ -31,12 +31,11 @@ export class UsersTableComponent {
   }
 
   goToDetail(userId: number): void {
-    // /dashboard/users/detail/2
     this.router.navigate(
       [
         'dashboard',
         'users',
-        'detail',
+
         userId,
         {
           nombre: 'josue',

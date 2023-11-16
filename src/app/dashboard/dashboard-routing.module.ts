@@ -8,23 +8,20 @@ import { adminGuard } from '../core/guards/admin.guard';
   imports: [
     RouterModule.forChild([
       {
-        path: '', // /dashboard,
+        path: '',
         component: DashboardComponent,
         children: [
           {
-            path: 'home', // /dashboard/home
+            path: 'home', 
             component: HomeComponent,
           },
-
           {
             path: 'courses',
-            /** hola_mundo */
             loadChildren: () =>
               import('./pages/courses/courses.module').then(
                 (m) => m.CoursesModule
               ),
           },
-
           {
             path: 'users',
             canActivate: [adminGuard],
@@ -38,24 +35,6 @@ import { adminGuard } from '../core/guards/admin.guard';
                 (m) => m.EnrollmentsModule
               ),
           },
-
-          // {
-          //   path: 'courses',
-          //   component: CoursesComponent,
-          // },
-          // {
-          //   path: 'courses/:id',
-          //   component: CourseDetailComponent,
-          // },
-
-          // {
-          //   path: 'users',
-          //   component: UsersComponent,
-          // },
-          // {
-          //   path: 'users/detail/:id',
-          //   component: UserDetailComponent,
-          // },
           {
             path: '**',
             redirectTo: 'home',

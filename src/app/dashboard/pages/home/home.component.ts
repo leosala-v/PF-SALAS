@@ -17,29 +17,25 @@ export class HomeComponent implements OnDestroy {
     this.getUsers();
 
     this.clockSuscription = this.getClock().subscribe({
-      // OK => then
       next: (v) => {
         console.log(v);
       },
-      // ERROR => catch
       error: (err) => {
         alert('Ocurrio un error!');
       },
-      // COMPLETA => finally
       complete: () => {
-        console.log('FINALIZO EL CONTADOR');
+        console.log('...');
       },
     });
-
     this.getClock().subscribe({
       next: (v) => {
-        console.log('SEGUNDA SUSCRIPCION');
+        console.log('...');
       },
     });
   }
 
   ngOnDestroy(): void {
-    console.log('SE DESTRUYO EL HOME');
+    console.log('...');
 
     this.clockSuscription.unsubscribe();
   }
@@ -55,33 +51,26 @@ export class HomeComponent implements OnDestroy {
         if (counter === 10) {
           suscriber.complete();
         }
-
-        // suscriber.error('error al mostrar la fecha');
-      }, 1000);
+      }, 0);
     });
   }
-
   async getUsers(): Promise<void> {
     this.loading = true;
     const getUsersPromise = new Promise((resolve, reject) => {
       const users: User[] = [];
       setTimeout(() => {
         resolve(users);
-      }, 5000);
+      }, 3000);
     });
 
-    // DETENTE AQUI HASTA QUE SE RESUELVA
     await getUsersPromise
-      // SALIO TODO OK
       .then((result) => console.log(result))
-      // ATRAPAMOS UN ERROR
       .catch((err) => {
         alert('Ocurrio un error inesperado'), console.log(err);
       })
       .finally(() => {
         this.loading = false;
       });
-
-    console.log('Hola mundo');
+    console.log('Se cargo todo oK');
   }
 }
