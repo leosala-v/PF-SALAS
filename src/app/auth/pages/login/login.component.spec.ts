@@ -2,8 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('LoginComponent', () => {
   let loginComponent: LoginComponent;
@@ -22,7 +21,7 @@ describe('LoginComponent', () => {
     expect(loginComponent).toBeTruthy();
   });
 
-  it('Debe marcar todos los campos del form como "touched" si este es invalido', () => {
+  it('should mark all form fields as "touched" if the form is invalid', () => {
     loginComponent.loginForm.patchValue({
       email: 'asndfgndskgnjdsk43534',
       password: '',
@@ -32,18 +31,19 @@ describe('LoginComponent', () => {
     expect(loginComponent.passwordControl.touched).toBeTrue();
   });
 
-  it('Debe llamar el metodo login del AuthService si el formulario es valid', () => {
+  it('should call the login method of AuthService if the form is valid', () => {
+    const fakeAuthService = {
+      login: jasmine.createSpy('login')
+    };
+    (loginComponent as any).authService = fakeAuthService;
+
     loginComponent.loginForm.patchValue({
       email: 'fakeemail@mail.com',
       password: '123456',
     });
 
-    const spyOnAuthServiceLogin = spyOn(
-      (loginComponent as any).authService,
-      'login'
-    );
     loginComponent.login();
     
-    expect(spyOnAuthServiceLogin).toHaveBeenCalled();
+    expect(fakeAuthService.login).toHaveBeenCalled();
   });
 });

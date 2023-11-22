@@ -26,13 +26,16 @@ export class SidebarComponent {
     return this.getUserProperty$((user) => user?.email);
   }
 
-  // Función genérica para obtener una propiedad del usuario.
+  // Función para obtener una propiedad del usuario.
   private getUserProperty$<T>(mapper: (user: User | null) => T): Observable<T> {
     return this.authUser$.pipe(map((user) => mapper(user)));
   }
 
-  // Método para cerrar sesión.
   logout(): void {
-    this.authService.logout();
+    const confirmLogout = confirm('¿Estás seguro de cerrar sesión?');
+
+    if (confirmLogout) {
+      this.authService.logout();
+    }
   }
 }
