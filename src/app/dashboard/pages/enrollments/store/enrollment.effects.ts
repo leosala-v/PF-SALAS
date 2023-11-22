@@ -13,7 +13,7 @@ import { User } from '../../users/models';
 export class EnrollmentEffects {
   loadEnrollments$ = createEffect(() => {
     return this.actions$.pipe(
-       ofType(EnrollmentActions.loadEnrollments),
+      ofType(EnrollmentActions.loadEnrollments),
       concatMap(() =>
         this.getEnrollments().pipe(
           map((data) => EnrollmentActions.loadEnrollmentsSuccess({ data })),
@@ -46,24 +46,26 @@ export class EnrollmentEffects {
   createEnrollment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(EnrollmentActions.createEnrollment),
-      concatMap((action) => {
-        return this.createEnrollment(action.payload).pipe(
-
+      concatMap((action) =>
+        this.createEnrollment(action.payload).pipe(
+          // Después de crear una matriculación, se carga la lista actualizada
           map((data) => EnrollmentActions.loadEnrollments()),
           catchError((error) =>
             of(EnrollmentActions.createEnrollmentFailure({ error }))
           )
-        );
-      })
+        )
+      )
     )
   );
   constructor(private actions$: Actions, private httpClient: HttpClient) {}
+  // Crear una matriculación
   createEnrollment(payload: CreateEnrollmentPayload): Observable<Enrollment> {
     return this.httpClient.post<Enrollment>(
       `${environment.baseUrl}/enrollments`,
       payload
     );
   }
+  // Obtener las opciones del diálogo de matriculación (cursos y estudiantes)
   getEnrollmentDialogOptions(): Observable<{
     courses: Course[];
     students: User[];
@@ -72,14 +74,13 @@ export class EnrollmentEffects {
       this.httpClient.get<Course[]>(`${environment.baseUrl}/courses`),
       this.httpClient.get<User[]>(`${environment.baseUrl}/users?role=STUDENT`),
     ]).pipe(
-      map(([courses, students]) => {
-        return {
-          courses,
-          students,
-        };
-      })
+      map(([courses, students]) => ({
+        courses,
+        students,
+      }))
     );
   }
+  // Obtener las matriculaciones
   getEnrollments(): Observable<Enrollment[]> {
     return this.httpClient.get<Enrollment[]>(
       `${environment.baseUrl}/enrollments?_expand=course&_expand=user`

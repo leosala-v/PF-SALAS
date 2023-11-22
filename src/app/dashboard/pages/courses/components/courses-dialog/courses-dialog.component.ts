@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoursesService } from '../../courses.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses-dialog',
@@ -24,22 +25,29 @@ export class CoursesDialogComponent {
     private coursesService: CoursesService,
     @Inject(MAT_DIALOG_DATA) private courseId?: number
   ) {
+    // Si se proporciona un courseId, carga los detalles del curso.
     if (courseId) {
-      this.coursesService.getCourseById$(courseId).subscribe({
-        next: (c) => {
-          if (c) {
-            this.courseForm.patchValue(c);
-          }
-        },
-      });
+      this.loadCourse(courseId);
     }
+  }
+
+  // Carga los detalles del curso si se está editando.
+  private loadCourse(courseId: number): void {
+    this.coursesService.getCourseById$(courseId)
+      .pipe(take(1)) // Toma solo la primera emisión del observable.
+      .subscribe((course) => {
+        if (course) {
+          // Rellena el formulario con los datos del curso.
+          this.courseForm.patchValue(course);
+        }
+      });
   }
   public get isEditing(): boolean {
     return !!this.courseId;
   }
   onSubmit(): void {
     if (this.courseForm.invalid) {
-      return this.courseForm.markAllAsTouched();
+      this.courseForm.markAllAsTouched();
     } else {
       this.matDialogRef.close(this.courseForm.value);
     }

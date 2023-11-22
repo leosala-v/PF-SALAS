@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { User } from '../users/models';
-import { Observable, Subscription } from 'rxjs';
-import { CommonService } from 'src/app/core/common.service';
+import { Subscription, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -9,65 +8,33 @@ import { CommonService } from 'src/app/core/common.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy {
-  loading = false;
-
-  clockSuscription: Subscription;
-
+  loading = false; 
+  clockSubscription: Subscription | undefined; 
   constructor() {
-    this.getUsers();
+    // Simulación de carga de usuarios después de 3 segundos
+    this.loading = true; // Estado de carga iniciado
+    setTimeout(() => {
+      this.loading = false; // Estado de carga finalizado
+      console.log('Se cargó todo correctamente'); // Mensaje de carga completada
+    }, 3000);
 
-    this.clockSuscription = this.getClock().subscribe({
-      next: (v) => {
-        console.log(v);
-      },
-      error: (err) => {
-        alert('Ocurrio un error!');
-      },
-      complete: () => {
-        console.log('...');
-      },
-    });
-    this.getClock().subscribe({
-      next: (v) => {
-        console.log('...');
-      },
-    });
+    this.startClock(); // Iniciar el reloj al inicio del componente
   }
   ngOnDestroy(): void {
-    console.log('...');
-
-    this.clockSuscription.unsubscribe();
+    // Desechar la suscripción al destruir el componente
+    this.clockSubscription?.unsubscribe();
   }
-  getClock(): Observable<number> {
-    return new Observable((suscriber) => {
-      let counter = 0;
 
-      setInterval(() => {
-        counter++;
-        suscriber.next(counter);
-
-        if (counter === 10) {
-          suscriber.complete();
-        }
-      }, 0);
-    });
-  }
-  async getUsers(): Promise<void> {
-    this.loading = true;
-    const getUsersPromise = new Promise((resolve, reject) => {
-      const users: User[] = [];
-      setTimeout(() => {
-        resolve(users);
-      }, 3000);
-    });
-    await getUsersPromise
-      .then((result) => console.log(result))
-      .catch((err) => {
-        alert('Ocurrio un error inesperado'), console.log(err);
-      })
-      .finally(() => {
-        this.loading = false;
+  startClock(): void {
+    // Lógica para el reloj que emite valores cada segundo durante 10 segundos
+    this.clockSubscription = timer(0, 1000) // Emite valores cada segundo
+      .pipe(take(10)) // Emite solo 10 valores y completa
+      .subscribe({
+        next: (v) => console.log('loading...', v + 1, 'seg.'), // Muestra el número del tick
+        error: () => {
+          alert('Ocurrió un error en el reloj'); // Muestra una alerta en caso de error
+        },
+        complete: () => console.log('Pagina cargada con exito!'), // Indica la finalización del reloj
       });
-    console.log('Se cargo todo oK');
   }
 }

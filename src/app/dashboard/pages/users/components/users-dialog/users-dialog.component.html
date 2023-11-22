@@ -1,25 +1,16 @@
-<h1 mat-dialog-title class="col-6" >
+<h1 mat-dialog-title class="col-6">
   {{ user ? "Editando usuario" : "Crear usuario" }}
 </h1>
 
 <div mat-dialog-content class="col-6">
   <form [formGroup]="userForm">
     <div class="row">
-      <div class="col-6">
+      <div class="col-6" *ngFor="let field of ['name', 'lastName']">
         <mat-form-field class="w-100">
-          <mat-label>Nombre</mat-label>
-          <input formControlName="name" matInput />
+          <mat-label>{{ field === 'name' ? 'Nombre' : 'Apellido' }}</mat-label>
+          <input formControlName="{{ field }}" matInput />
           <mat-error>
-            {{ userForm.get("name")?.errors | formErrors }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-6">
-        <mat-form-field class="w-100">
-          <mat-label>Apellido</mat-label>
-          <input formControlName="lastName" matInput />
-          <mat-error>
-            {{ userForm.get("lastName")?.errors | formErrors }}
+            {{ userForm.get(field)?.errors | formErrors }}
           </mat-error>
         </mat-form-field>
       </div>

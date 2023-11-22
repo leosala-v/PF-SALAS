@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EnrollmentActions } from '../../store/enrollment.actions';
-import { selectCourseOptions, selectIsLoadingDialogOptions, selectStudentOptions,} from '../../store/enrollment.selectors';
-import { Observable, take } from 'rxjs';
+import { selectCourseOptions, selectIsLoadingDialogOptions, selectStudentOptions } from '../../store/enrollment.selectors';
+import { Observable } from 'rxjs';
 import { Course } from '../../../courses/models';
 import { User } from '../../../users/models';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -36,15 +36,13 @@ export class EnrollmentDialogComponent {
     this.isLoading$ = this.store.select(selectIsLoadingDialogOptions);
     this.courseOptions$ = this.store.select(selectCourseOptions);
     this.studentOptions$ = this.store.select(selectStudentOptions);
-
-    this.action$
-      .pipe(ofType(EnrollmentActions.loadEnrollments), take(1))
-      .subscribe({
-        next: () => this.matDialogRef.close(),
-      });
+    this.action$.pipe(ofType(EnrollmentActions.loadEnrollments)).subscribe({
+      next: () => this.matDialogRef.close(),
+    });
   }
 
   onSubmit(): void {
+    // Se crea una inscripción con los valores del formulario
     this.store.dispatch(
       EnrollmentActions.createEnrollment({
         payload: this.enrollmentForm.getRawValue(),

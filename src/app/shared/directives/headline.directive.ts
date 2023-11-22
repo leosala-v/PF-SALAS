@@ -1,4 +1,4 @@
-import {  Directive, ElementRef, Input, Renderer2} from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appHeadline]',
@@ -7,11 +7,10 @@ export class HeadlineDirective {
   private _fontWeight = 'normal';
 
   @Input()
-  get fontWeight() {
+  get fontWeight(): string {
     return this._fontWeight;
   }
   set fontWeight(newValue: string) {
-    console.log('CAMBIO EL VALOR: ', newValue);
     this._fontWeight = newValue;
     this.render.setStyle(
       this.elementRef.nativeElement,

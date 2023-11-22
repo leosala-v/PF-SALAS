@@ -9,19 +9,12 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadChildren: () =>
-          import('./pages/login/login.module').then((m) => m.LoginModule),
+        loadChildren: () => import('./pages/login/login.module').then((m) => m.LoginModule),
       },
-      {
-        path: '**',
-        redirectTo: 'login',
-      },
+      { path: '**', redirectTo: 'login' }, 
     ],
   },
-  {
-    path: '**',
-    redirectTo: 'login',
-  },
+  { path: '**', redirectTo: 'login' }, 
 ];
 
 @NgModule({

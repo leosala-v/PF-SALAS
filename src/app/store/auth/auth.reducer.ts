@@ -3,21 +3,21 @@ import { User } from 'src/app/dashboard/pages/users/models';
 import { AuthActions } from './auth.actions';
 
 export const authFeatureKey = 'auth';
-
 export interface State {
   authUser: User | null;
 }
 
+// Estado inicial
 const initialState: State = {
   authUser: null,
 };
-
 export const reducer = createReducer(
   initialState,
+  // Acción para establecer el usuario autenticado
   on(AuthActions.setAuthUser, (state, { data }) => ({
     ...state,
     authUser: data,
   })),
-
+  // Acción para restablecer el estado a su valor inicial
   on(AuthActions.resetState, () => initialState)
 );
