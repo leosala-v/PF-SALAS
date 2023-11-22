@@ -1,10 +1,8 @@
-<h1 mat-dialog-title>
+<h1 mat-dialog-title class="col-6" >
   {{ user ? "Editando usuario" : "Crear usuario" }}
 </h1>
 
-<div mat-dialog-content>
-  <!-- Contenido... -->
-
+<div mat-dialog-content class="col-6">
   <form [formGroup]="userForm">
     <div class="row">
       <div class="col-6">

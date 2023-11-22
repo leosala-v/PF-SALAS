@@ -40,6 +40,7 @@ import { adminGuard } from '../core/guards/admin.guard';
             redirectTo: 'home',
           },
         ],
+        
       },
     ]),
   ],

@@ -26,42 +26,32 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  // loadEnrollments
   on(EnrollmentActions.loadEnrollments, (state) => ({
     ...state,
     isLoading: true,
   })),
-
-  // loadEnrollmentsSuccess
   on(EnrollmentActions.loadEnrollmentsSuccess, (state, { data }) => ({
     ...state,
     isLoading: false,
     enrollments: data,
   })),
-
-  // loadEnrollmentsFailure
   on(EnrollmentActions.loadEnrollmentsFailure, (state, { error }) => ({
     ...state,
     isLoading: false,
     error,
   })),
-
-  //loadEnrollmentDialogOptions
   on(EnrollmentActions.loadEnrollmentDialogOptions, (state) => {
     return {
       ...state,
       isLoadingDialogOptions: true,
     };
   }),
-  //loadEnrollmentDialogOptionsSuccess
   on(EnrollmentActions.loadEnrollmentDialogOptionsSuccess, (state, action) => ({
     ...state,
     courseOptions: action.courses,
     studentOptions: action.students,
     isLoadingDialogOptions: false,
   })),
-
-  //loadEnrollmentDialogOptionsFailure
   on(EnrollmentActions.loadEnrollmentDialogOptionsFailure, (state, action) => ({
     ...state,
     error: action.error,

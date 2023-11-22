@@ -41,7 +41,7 @@ export class AuthService {
           if (!authUser) {
             alert('Usuario o contrasena invalidos');
           } else if (authUser?.role === 'STUDENT') {
-            alert('No tienes permiso para acceder');
+            alert('Comunicate con administrativo para mas consultas');
           } else {
             this.handleAuthUser(authUser);
 

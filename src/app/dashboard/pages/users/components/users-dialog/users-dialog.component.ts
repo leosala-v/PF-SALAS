@@ -15,7 +15,6 @@ export class UsersDialogComponent {
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<UsersDialogComponent>,
 
-    // RECIBO LA DATA
     @Inject(MAT_DIALOG_DATA) public user?: User
   ) {
     this.userForm = this.fb.group({
@@ -23,12 +22,10 @@ export class UsersDialogComponent {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
-
     if (this.user) {
       this.userForm.patchValue(this.user);
     }
   }
-
   onSubmit(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();

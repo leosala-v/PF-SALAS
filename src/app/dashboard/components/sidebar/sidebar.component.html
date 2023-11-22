@@ -1,42 +1,19 @@
-<div style="background-color: aquamarine">
-  <p>
-    {{ fullName$ | async }}
-    <br />
-    {{ email$ | async }}
+<div style="background-color: #c2185b">
+  <p> {{ fullName$ | async }}
   </p>
 </div>
 
 <mat-nav-list>
-  <!-- /dashboard me llevara a /dashboard/home -->
   <mat-list-item routerLink="home">
-    <a>Home</a>
+    <a>Menu Principal</a>
   </mat-list-item>
-
-  <mat-list-item
-    routerLink="users"
-    routerLinkActive
-    #usuariosLink="routerLinkActive"
-    [activated]="usuariosLink.isActive"
-  >
-    <a>Usuarios</a>
-  </mat-list-item>
-  <mat-list-item
-    routerLink="courses"
-    routerLinkActive
-    #cursosLink="routerLinkActive"
-    [activated]="cursosLink.isActive"
-  >
-    <a>Cursos</a>
-  </mat-list-item>
-  <mat-list-item>
+  <mat-list-item routerLink="users" routerLinkActive #usuariosLink="routerLinkActive" [activated]="usuariosLink.isActive">
     <a>Alumnos</a>
   </mat-list-item>
-  <mat-list-item
-    routerLink="enrollments"
-    routerLinkActive
-    #enrollmentsLink="routerLinkActive"
-    [activated]="enrollmentsLink.isActive"
-  >
+  <mat-list-item routerLink="courses" routerLinkActive #cursosLink="routerLinkActive" [activated]="cursosLink.isActive">
+    <a>Cursos</a>
+  </mat-list-item>
+  <mat-list-item routerLink="enrollments" routerLinkActive #enrollmentsLink="routerLinkActive" [activated]="enrollmentsLink.isActive">
     <a>Inscripciones</a>
   </mat-list-item>
   <mat-list-item (click)="logout()">

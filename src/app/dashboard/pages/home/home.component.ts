@@ -33,13 +33,11 @@ export class HomeComponent implements OnDestroy {
       },
     });
   }
-
   ngOnDestroy(): void {
     console.log('...');
 
     this.clockSuscription.unsubscribe();
   }
-
   getClock(): Observable<number> {
     return new Observable((suscriber) => {
       let counter = 0;
@@ -62,7 +60,6 @@ export class HomeComponent implements OnDestroy {
         resolve(users);
       }, 3000);
     });
-
     await getUsersPromise
       .then((result) => console.log(result))
       .catch((err) => {

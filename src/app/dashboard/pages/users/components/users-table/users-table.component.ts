@@ -29,24 +29,4 @@ export class UsersTableComponent {
       .select(selectAuthUser)
       .pipe(map((u) => u?.role));
   }
-
-  goToDetail(userId: number): void {
-    this.router.navigate(
-      [
-        'dashboard',
-        'users',
-
-        userId,
-        {
-          nombre: 'josue',
-          edad: 28,
-        },
-      ],
-      {
-        queryParams: {
-          search: 'hola mundo',
-        },
-      }
-    );
-  }
 }

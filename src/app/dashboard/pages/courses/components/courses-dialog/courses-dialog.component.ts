@@ -34,16 +34,13 @@ export class CoursesDialogComponent {
       });
     }
   }
-
   public get isEditing(): boolean {
     return !!this.courseId;
   }
-
   onSubmit(): void {
     if (this.courseForm.invalid) {
       return this.courseForm.markAllAsTouched();
     } else {
-      // logica para crear un curso
       this.matDialogRef.close(this.courseForm.value);
     }
   }

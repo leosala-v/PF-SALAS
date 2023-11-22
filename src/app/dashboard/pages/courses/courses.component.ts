@@ -19,7 +19,6 @@ export class CoursesComponent {
   ) {
     this.courses$ = this.coursesService.getCourses$();
   }
-
   addCourse(): void {
     this.matDialog
       .open(CoursesDialogComponent)
@@ -37,11 +36,9 @@ export class CoursesComponent {
         },
       });
   }
-
   onDeleteCourse(courseId: number): void {
     this.courses$ = this.coursesService.deleteCourse$(courseId);
   }
-
   onEditCourse(courseId: number): void {
     this.matDialog
       .open(CoursesDialogComponent, {
